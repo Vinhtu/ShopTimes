@@ -9,28 +9,21 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
-            android:id="@+id/nav_cart"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Cart" />
+            android:id="@+id/nav_admin_brand"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="@string/brands"
+            />
         <item
             android:id="@+id/nav_order_status"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Order Status" />
-        <item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Logout" />
+            android:title="@string/orders" />
         <item
             android:id="@+id/nav_admin_user"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Admin User" />
+            android:title="@string/customers" />
         <item
             android:id="@+id/nav_admin_product"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Admin Product" />
-        <item
-            android:id="@+id/nav_admin_order"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Admin Order" />
+            android:title="@string/products" />
     </group>
 </menu>
