@@ -7,7 +7,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.data.responses.ProductResponse;
+
+import java.util.List;
+
 public class AdminProductAdapter extends RecyclerView.Adapter<AdminProductAdapter.ViewHolder> {
+    private List<ProductResponse> products;
+
+    public AdminProductAdapter(List<ProductResponse> products) {
+        this.products = products;
+    }
 
     @NonNull
     @Override

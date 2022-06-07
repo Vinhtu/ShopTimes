@@ -7,30 +7,33 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.databinding.AdminFragmentProductBinding;
-import com.example.myapplication.databinding.FragmentCartBinding;
+import com.example.myapplication.R;
+import com.example.myapplication.data.responses.ProductResponse;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminProductFragment extends Fragment {
-
-    private AdminFragmentProductBinding binding;
+    private static List<ProductResponse> products;
+    private static AdminProductAdapter productAdapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        AdminProductViewModel cartViewModel =
-                new ViewModelProvider(this).get(AdminProductViewModel.class);
+        View view = inflater.inflate(R.layout.fragment_admin_product, container, false);
+        RecyclerView rvProduct = view.findViewById(R.id.product_admin_list);
+        products = new ArrayList<>();
+        productAdapter = new AdminProductAdapter(products);
+        rvProduct.setAdapter(productAdapter);
+        rvProduct.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        binding = AdminFragmentProductBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-
-        return root;
+        return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
     }
 }

@@ -16,6 +16,7 @@ import com.example.myapplication.data.requests.LoginRequest;
 import com.example.myapplication.data.responses.LoginResponse;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +25,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     EditText txtUsername, txtPassword;
     Button btnLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +55,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<LoginResponse> call, @NonNull Response<LoginResponse> response) {
                 if (response.isSuccessful()) {
                     Toast.makeText(LoginActivity.this, "Đăng nhập thành công", Toast.LENGTH_LONG).show();
-                    new Handler().postDelayed((Runnable) () -> {
-                        startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-                    }, 500);
+                    switch (Objects.requireNonNull(response.body()).getRole()) {
+                        case "ADMIN":
+                            new Handler().postDelayed((Runnable) () -> startActivity(new Intent(LoginActivity.this, AdminActivity.class)), 500);
+                            break;
+                        case "USER": {
+                            Intent intent = new Intent(LoginActivity.this, UserActivity.class);
+                            intent.putExtra("accountId", response.body().getId());
+                            new Handler().postDelayed((Runnable) () -> startActivity(intent), 300);
+                            break;
+                        }
+                    }
                 } else {
                     if (response.code() == 400) {
                         try {
-                            Toast.makeText(LoginActivity.this, response.errorBody().string().toString(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

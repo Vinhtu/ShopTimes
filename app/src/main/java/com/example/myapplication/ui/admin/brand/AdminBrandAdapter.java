@@ -2,8 +2,7 @@ package com.example.myapplication.ui.admin.brand;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +15,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.data.RetrofitClient;
 import com.example.myapplication.data.requests.BrandRequest;
 import com.example.myapplication.data.responses.BrandResponse;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
 public class AdminBrandAdapter extends RecyclerView.Adapter<AdminBrandAdapter.ViewHolder> {
     public List<BrandResponse> brands;
+    private final Context context;
 
-    public AdminBrandAdapter(List<BrandResponse> brands) {
+    public AdminBrandAdapter(List<BrandResponse> brands, Context context) {
         this.brands = brands;
+        this.context = context;
     }
 
     @NonNull
@@ -56,10 +52,14 @@ public class AdminBrandAdapter extends RecyclerView.Adapter<AdminBrandAdapter.Vi
             alertDialog.setView(updateView);
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Lưu", (dialog, which) -> {
                 EditText editText = alertDialog.findViewById(R.id.brand_update_edit_text);
-                BrandRequest request = new BrandRequest();
-                request.Name = editText.getText().toString();
+                if (TextUtils.isEmpty(editText.getText().toString())) {
+                    Toast.makeText(view.getContext(), "Không được bỏ trống", Toast.LENGTH_LONG).show();
+                } else {
+                    BrandRequest request = new BrandRequest();
+                    request.Name = editText.getText().toString();
 
-                AdminBrandFragment.updateBrand(brand, request, position);
+                    AdminBrandFragment.updateBrand(brand, request, position);
+                }
             });
 
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Huỷ", ((dialog, which) -> {
@@ -72,9 +72,8 @@ public class AdminBrandAdapter extends RecyclerView.Adapter<AdminBrandAdapter.Vi
         holder.deleteButton.setOnClickListener(view -> {
             AlertDialog alertDialog = new AlertDialog.Builder(view.getContext()).create();
             alertDialog.setMessage("Bạn có chắc muốn xoá thương hiệu này không ?");
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Có", (dialog, which) -> {
-                AdminBrandFragment.deleteBrand(brand.Id, position);
-            });
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Có", (dialog, which) ->
+                    AdminBrandFragment.deleteBrand(brand.getId(), position));
 
             alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Không", ((dialog, which) -> {
 
@@ -89,7 +88,7 @@ public class AdminBrandAdapter extends RecyclerView.Adapter<AdminBrandAdapter.Vi
         return brands.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView nameTextView;
         public Button editButton;
         public Button deleteButton;

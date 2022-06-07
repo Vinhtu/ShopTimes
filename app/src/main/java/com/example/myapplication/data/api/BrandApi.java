@@ -19,7 +19,7 @@ public interface BrandApi {
     Call<List<BrandResponse>> GetAll();
 
     @POST("brands")
-    Call<String> Create();
+    Call<BrandResponse> Create(@Body BrandRequest request);
 
     @PUT("brands/{brandId}")
     Call<BrandResponse> Update(@Path("brandId") String id, @Body BrandRequest request);

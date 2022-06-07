@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.myapplication.databinding.AdminFragmentOrderBinding;
-import com.example.myapplication.databinding.AdminFragmentProductBinding;
 import com.example.myapplication.databinding.FragmentCartBinding;
 
 public class AdminOrderFragment extends Fragment {

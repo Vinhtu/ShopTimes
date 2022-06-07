@@ -6,6 +6,18 @@
     app:startDestination="@+id/nav_home">
 
     <fragment
+        android:id="@+id/nav_admin_strap"
+        android:name="com.example.myapplication.ui.admin.strap.AdminStrapFragment"
+        tools:layout="@layout/fragment_admin_strap" />
+    <fragment
+        android:id="@+id/nav_admin_machine"
+        android:name="com.example.myapplication.ui.admin.machine.AdminMachineFragment"
+        tools:layout="@layout/fragment_admin_machine" />
+    <fragment
+        android:id="@+id/nav_admin_glass"
+        android:name="com.example.myapplication.ui.admin.glass.AdminGlassFragment"
+        tools:layout="@layout/fragment_admin_glass" />
+    <fragment
         android:id="@+id/nav_admin_brand"
         android:name="com.example.myapplication.ui.admin.brand.AdminBrandFragment"
         tools:layout="@layout/fragment_admin_brand" />
@@ -40,7 +52,7 @@
     <fragment
         android:id="@+id/nav_admin_product"
         android:name="com.example.myapplication.ui.admin.product.AdminProductFragment"
-        tools:layout="@layout/admin_fragment_product" />
+        tools:layout="@layout/fragment_admin_product" />
 
     <fragment
         android:id="@+id/nav_admin_order"
